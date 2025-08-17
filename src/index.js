@@ -37,5 +37,6 @@ function printf(format, ...args) {
 }
 
 global.println = println;
+global.printf = printf;
 
 module.exports = {};
