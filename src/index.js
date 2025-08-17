@@ -1,6 +1,7 @@
 const path = require('node:path');
 const os = require('node:os');
 const child_process = require('node:child_process');
+const fs = require('node:fs');
 
 function println(...args) {
   const output = args.join(' ');
@@ -159,6 +160,108 @@ function timerEnd(start) {
   return Number(end - start) / 1_000_000;
 }
 
+function systemInfo() {
+  const cpus = os.cpus();
+  const networkInterfaces = os.networkInterfaces();
+  const memInfo = process.memoryUsage();
+  
+  return {
+    // Operating System Info
+    os: {
+      platform: os.platform(),
+      type: os.type(),
+      release: os.release(),
+      version: os.version(),
+      arch: os.arch(),
+      hostname: os.hostname(),
+      homedir: os.homedir(),
+      tmpdir: os.tmpdir(),
+      endianness: os.endianness(),
+      uptime: os.uptime()
+    },
+    
+    // CPU Information
+    cpu: {
+      model: cpus[0]?.model || 'Unknown',
+      cores: cpus.length,
+      speed: cpus[0]?.speed || 0,
+      details: cpus.map(cpu => ({
+        model: cpu.model,
+        speed: cpu.speed,
+        times: cpu.times
+      }))
+    },
+    
+    // Memory Information
+    memory: {
+      total: os.totalmem(),
+      free: os.freemem(),
+      used: os.totalmem() - os.freemem(),
+      process: {
+        rss: memInfo.rss,
+        heapTotal: memInfo.heapTotal,
+        heapUsed: memInfo.heapUsed,
+        external: memInfo.external,
+        arrayBuffers: memInfo.arrayBuffers
+      }
+    },
+    
+    // Network Interfaces
+    network: Object.keys(networkInterfaces).map(name => ({
+      name,
+      addresses: networkInterfaces[name].map(addr => ({
+        address: addr.address,
+        netmask: addr.netmask,
+        family: addr.family,
+        mac: addr.mac,
+        internal: addr.internal
+      }))
+    })),
+    
+    // Process Information
+    process: {
+      pid: process.pid,
+      ppid: process.ppid,
+      platform: process.platform,
+      arch: process.arch,
+      version: process.version,
+      versions: process.versions,
+      title: process.title,
+      argv: process.argv,
+      execPath: process.execPath,
+      cwd: process.cwd(),
+      uid: process.getuid ? process.getuid() : null,
+      gid: process.getgid ? process.getgid() : null,
+      env: process.env
+    },
+    
+    // Load Average (Unix-like systems only)
+    loadavg: os.loadavg(),
+    
+    // User Information
+    user: {
+      info: os.userInfo(),
+      homedir: os.homedir()
+    },
+    
+    // Runtime Information
+    runtime: {
+      nodeVersion: process.version,
+      v8Version: process.versions.v8,
+      uvVersion: process.versions.uv,
+      zlibVersion: process.versions.zlib,
+      opensslVersion: process.versions.openssl
+    },
+    
+    // System Constants
+    constants: {
+      priorities: os.constants.priority,
+      signals: os.constants.signals,
+      errno: os.constants.errno
+    }
+  };
+}
+
 global.ns = {
     println,
     printf,
@@ -188,6 +291,7 @@ global.ns = {
     timestamp,
     timerStart,
     timerEnd,
+    systemInfo,
 };
 global.ns = Object.freeze(global.ns);
 global.println = global.ns.println;
