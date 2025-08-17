@@ -63,17 +63,17 @@ pnpm add node-scripts
 // Import the library
 require('node-scripts');
 
-// Now you have access to global utilities
+// Global functions (println and printf)
 println("Hello, World!");
 printf("User: %s, Age: %d\n", "John", 25);
 
-// Type checking
-if (isString("hello")) {
+// All other functions use the ns namespace
+if (ns.isString("hello")) {
     println("It's a string!");
 }
 
 // System information
-const info = systemInfo();
+const info = ns.systemInfo();
 printf("Running on: %s\n", info.os.platform);
 ```
 
@@ -98,15 +98,15 @@ printf("Running on: %s\n", info.os.platform);
 
 | Function | Returns | Example |
 |----------|---------|---------|
-| `isString(v)` | `boolean` | `isString("hello")` |
-| `isNumber(v)` | `boolean` | `isNumber(42)` |
-| `isArray(v)` | `boolean` | `isArray([1,2,3])` |
-| `isObject(v)` | `boolean` | `isObject({})` |
-| `isFunction(v)` | `boolean` | `isFunction(() => {})` |
-| `isBoolean(v)` | `boolean` | `isBoolean(true)` |
-| `isNull(v)` | `boolean` | `isNull(null)` |
-| `isUndefined(v)` | `boolean` | `isUndefined(undefined)` |
-| `isEmpty(v)` | `boolean` | `isEmpty("")` |
+| `ns.isString(v)` | `boolean` | `ns.isString("hello")` |
+| `ns.isNumber(v)` | `boolean` | `ns.isNumber(42)` |
+| `ns.isArray(v)` | `boolean` | `ns.isArray([1,2,3])` |
+| `ns.isObject(v)` | `boolean` | `ns.isObject({})` |
+| `ns.isFunction(v)` | `boolean` | `ns.isFunction(() => {})` |
+| `ns.isBoolean(v)` | `boolean` | `ns.isBoolean(true)` |
+| `ns.isNull(v)` | `boolean` | `ns.isNull(null)` |
+| `ns.isUndefined(v)` | `boolean` | `ns.isUndefined(undefined)` |
+| `ns.isEmpty(v)` | `boolean` | `ns.isEmpty("")` |
 
 <div align="center">
 
@@ -116,12 +116,12 @@ printf("Running on: %s\n", info.os.platform);
 
 | Function | Description | Example |
 |----------|-------------|---------|
-| `basename(path)` | Get filename | `basename("/path/file.txt")` |
-| `dirname(path)` | Get directory | `dirname("/path/file.txt")` |
-| `extname(path)` | Get extension | `extname("file.txt")` |
-| `hostname()` | Get hostname | `hostname()` |
-| `homedir()` | Get home directory | `homedir()` |
-| `platform()` | Get platform | `platform()` |
+| `ns.basename(path)` | Get filename | `ns.basename("/path/file.txt")` |
+| `ns.dirname(path)` | Get directory | `ns.dirname("/path/file.txt")` |
+| `ns.extname(path)` | Get extension | `ns.extname("file.txt")` |
+| `ns.hostname()` | Get hostname | `ns.hostname()` |
+| `ns.homedir()` | Get home directory | `ns.homedir()` |
+| `ns.platform()` | Get platform | `ns.platform()` |
 
 <div align="center">
 
@@ -131,13 +131,13 @@ printf("Running on: %s\n", info.os.platform);
 
 | Function | Description | Example |
 |----------|-------------|---------|
-| `sleep(ms)` | Async sleep | `await sleep(1000)` |
-| `timestamp()` | Unix timestamp | `timestamp()` |
-| `timerStart()` | Start timer | `const start = timerStart()` |
-| `timerEnd(start)` | End timer (ms) | `timerEnd(start)` |
-| `exec(command)` | Execute command | `exec("ls -la")` |
-| `args()` | Command line args | `args()` |
-| `env(key, default)` | Environment variable | `env("NODE_ENV", "dev")` |
+| `ns.sleep(ms)` | Async sleep | `await ns.sleep(1000)` |
+| `ns.timestamp()` | Unix timestamp | `ns.timestamp()` |
+| `ns.timerStart()` | Start timer | `const start = ns.timerStart()` |
+| `ns.timerEnd(start)` | End timer (ms) | `ns.timerEnd(start)` |
+| `ns.exec(command)` | Execute command | `ns.exec("ls -la")` |
+| `ns.args()` | Command line args | `ns.args()` |
+| `ns.env(key, default)` | Environment variable | `ns.env("NODE_ENV", "dev")` |
 
 ## 💡 Examples
 
@@ -150,18 +150,18 @@ printf("Running on: %s\n", info.os.platform);
 ```javascript
 // Type checking example
 const data = "Hello World";
-if (isString(data)) {
+if (ns.isString(data)) {
     println(`Data is a string: ${data}`);
 }
 
 // Timer example
-const start = timerStart();
-await sleep(1000);
-const elapsed = timerEnd(start);
+const start = ns.timerStart();
+await ns.sleep(1000);
+const elapsed = ns.timerEnd(start);
 printf("Operation took: %.2f ms\n", elapsed);
 
 // System info example
-const info = systemInfo();
+const info = ns.systemInfo();
 println(`Platform: ${info.os.platform}`);
 println(`CPU Cores: ${info.cpu.cores}`);
 println(`Total Memory: ${Math.round(info.memory.total / 1024 / 1024)} MB`);
@@ -175,12 +175,12 @@ println(`Total Memory: ${Math.round(info.memory.total / 1024 / 1024)} MB`);
 
 ```javascript
 async function interactive() {
-    const name = await input("Enter your name: ");
-    const age = await input("Enter your age: ");
+    const name = await ns.input("Enter your name: ");
+    const age = await ns.input("Enter your age: ");
     
     printf("Hello %s! You are %d years old.\n", name, parseInt(age));
     
-    if (isNumber(parseInt(age)) && parseInt(age) >= 18) {
+    if (ns.isNumber(parseInt(age)) && parseInt(age) >= 18) {
         println("You are an adult! 🎉");
     } else {
         println("You are a minor! 👶");
