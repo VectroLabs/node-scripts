@@ -190,18 +190,6 @@ async function interactive() {
 interactive();
 ```
 
-## 🏗️ Project Structure
-
-```
-node-scripts/
-├── src/
-│   ├── index.js      # Main library file
-│   └── index.mjs     # ES module wrapper
-├── package.json      # Project configuration
-├── LICENSE           # Apache 2.0 License
-└── README.md         # This file
-```
-
 ## 🤝 Contributing
 
 <div align="center">
@@ -229,8 +217,6 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 <br>
 
 **Made with ❤️ by [VectroLabs](https://github.com/VectroLabs)**
-
-[![Try with Replit Badge](https://replit.com/badge?caption=Try%20with%20Replit)](https://replit.com/@your-username/node-scripts)
 
 <br>
 
