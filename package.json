@@ -1,12 +1,13 @@
 {
   "name": "node-scripts",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simplify your Node.js scripting with a comprehensive set of utility functions",
   "keywords": [
+    "node-scripts",
     "node",
     "scripts"
   ],
-  "homepage": "https://github.com/VectroLabs/node-scripts#readme",
+  "homepage": "https://github.com/VectroLabs/node-scripts",
   "bugs": {
     "url": "https://github.com/VectroLabs/node-scripts/issues"
   },
@@ -18,11 +19,14 @@
   "author": "VectroLabs <vectrolabs.official@gmail.com>",
   "type": "commonjs",
   "main": "src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.mjs",
+      "require": "./src/index.js"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "undici-types": "^7.10.0"
   },
   "devDependencies": {
     "@types/node": "^24.3.0"

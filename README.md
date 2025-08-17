@@ -5,10 +5,9 @@
 
 **A powerful Node.js utility library for scripting and automation**
 
-[![Made with Replit](https://replit.com/badge?caption=Made%20with%20Replit&variant=small)](https://replit.com/@your-username/node-scripts)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Node.js](https://img.shields.io/badge/Node.js-24.x-green.svg)](https://nodejs.org/)
-[![npm version](https://img.shields.io/badge/npm-1.0.0-red.svg)](https://www.npmjs.com/)
+[![npm version](https://img.shields.io/badge/npm-1.0.0-red.svg)](https://www.npmjs.com/package/node-scripts)
 
 <br>
 
@@ -47,14 +46,7 @@
 ## Installation
 
 ```bash
-# Install from npm
 npm install node-scripts
-
-# Or using yarn
-yarn add node-scripts
-
-# Or using pnpm
-pnpm add node-scripts
 ```
 
 ## Quick Start
