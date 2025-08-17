@@ -1,0 +1,30 @@
+{
+  "name": "node-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "node",
+    "scripts"
+  ],
+  "homepage": "https://github.com/VectroLabs/node-scripts#readme",
+  "bugs": {
+    "url": "https://github.com/VectroLabs/node-scripts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VectroLabs/node-scripts.git"
+  },
+  "license": "Apache-2.0",
+  "author": "VectroLabs <vectrolabs.official@gmail.com>",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "undici-types": "^7.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0"
+  }
+}
