@@ -1,7 +1,7 @@
 
 <div align="center">
 
-# 🚀 Node Scripts
+# Node Scripts
 
 **A powerful Node.js utility library for scripting and automation**
 
@@ -28,23 +28,23 @@
 
 ---
 
-## ✨ Features
+## Features
 
 <div align="center">
 
 | Feature | Description |
 |---------|-------------|
-| 🖨️ **Output Functions** | Enhanced `println` and `printf` with formatting |
-| ⌨️ **Input Handling** | Async input function for user interaction |
-| 🔍 **Type Checking** | Complete set of type validation utilities |
-| 📁 **Path Operations** | File system path manipulation helpers |
-| 💻 **System Info** | Comprehensive system information gathering |
-| ⏱️ **Timing Utils** | Timer functions for performance measurement |
-| 🔧 **Process Control** | Execute commands and manage process lifecycle |
+| **Output Functions** | Enhanced `println` and `printf` with formatting |
+| **Input Handling** | Async input function for user interaction |
+| **Type Checking** | Complete set of type validation utilities |
+| **Path Operations** | File system path manipulation helpers |
+| **System Info** | Comprehensive system information gathering |
+| **Timing Utils** | Timer functions for performance measurement |
+| **Process Control** | Execute commands and manage process lifecycle |
 
 </div>
 
-## 📦 Installation
+## Installation
 
 ```bash
 # Install from npm
@@ -57,7 +57,7 @@ yarn add node-scripts
 pnpm add node-scripts
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ```javascript
 // Import the library
@@ -77,11 +77,11 @@ const info = ns.systemInfo();
 printf("Running on: %s\n", info.os.platform);
 ```
 
-## 📚 API Reference
+## API Reference
 
 <div align="center">
 
-### 🖨️ Output Functions
+### Output Functions
 
 </div>
 
@@ -92,7 +92,7 @@ printf("Running on: %s\n", info.os.platform);
 
 <div align="center">
 
-### 🔍 Type Checking Functions
+### Type Checking Functions
 
 </div>
 
@@ -110,7 +110,7 @@ printf("Running on: %s\n", info.os.platform);
 
 <div align="center">
 
-### 📁 Path & System Functions
+### Path & System Functions
 
 </div>
 
@@ -125,7 +125,7 @@ printf("Running on: %s\n", info.os.platform);
 
 <div align="center">
 
-### ⏱️ Timing & Process Functions
+### Timing & Process Functions
 
 </div>
 
@@ -139,7 +139,7 @@ printf("Running on: %s\n", info.os.platform);
 | `ns.args()` | Command line args | `ns.args()` |
 | `ns.env(key, default)` | Environment variable | `ns.env("NODE_ENV", "dev")` |
 
-## 💡 Examples
+## Examples
 
 <div align="center">
 
@@ -181,22 +181,22 @@ async function interactive() {
     printf("Hello %s! You are %d years old.\n", name, parseInt(age));
     
     if (ns.isNumber(parseInt(age)) && parseInt(age) >= 18) {
-        println("You are an adult! 🎉");
+        println("You are an adult!");
     } else {
-        println("You are a minor! 👶");
+        println("You are a minor!");
     }
 }
 
 interactive();
 ```
 
-## 🤝 Contributing
+## Contributing
 
 <div align="center">
 
 We welcome contributions! Here's how you can help:
 
-**🐛 Report Bugs** • **💡 Suggest Features** • **📝 Improve Documentation** • **🔧 Submit Pull Requests**
+**Report Bugs** • **Suggest Features** • **Improve Documentation** • **Submit Pull Requests**
 
 </div>
 
@@ -206,7 +206,7 @@ We welcome contributions! Here's how you can help:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 <div align="center">
 
@@ -220,6 +220,6 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 
 <br>
 
-*⭐ Star this repository if you found it helpful!*
+*Star this repository if you found it helpful!*
 
 </div>
