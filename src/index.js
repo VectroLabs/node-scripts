@@ -1,85 +1,33 @@
+const path = require('node:path');
+const os = require('node:os');
+const child_process = require('node:child_process');
 
-'use strict';
-
-// Cache for better performance
-const formatSpecifiers = /(%%)|(%)([sdifboxXv])/g;
-const numberCache = new Map();
-
-function println(x, ...args) {
-  // More efficient string concatenation
-  const output = args.length > 0 ? `${x}${args.join('')}` : String(x);
-  process.stdout.write(output + '\n');
-  return x;
+function println(...args) {
+  const output = args.join(' ');
+  process.stdout.write(output + "\n");
+  return args[0];
 }
 
 function printf(format, ...args) {
-  if (typeof format !== 'string') {
-    format = String(format);
-  }
-  
+  let result = format;
   let argIndex = 0;
   
-  // Optimized regex replacement with better error handling
-  const result = format.replace(formatSpecifiers, (match, escaped, percent, specifier) => {
-    // Handle escaped %% first
-    if (escaped) return '%';
-    
-    // Check if we have arguments left
+  result = result.replace(/%[sdifboxXv%]/g, (match) => {
+    if (match === '%%') return '%';
     if (argIndex >= args.length) return match;
-    
     const arg = args[argIndex++];
     
-    // Optimized type conversion with caching for numbers
-    switch (specifier) {
-      case 's': 
-        return String(arg);
-      
-      case 'd':
-      case 'i': {
-        const num = Number(arg);
-        return Number.isNaN(num) ? '0' : Math.trunc(num).toString();
-      }
-      
-      case 'f': {
-        const num = Number(arg);
-        return Number.isNaN(num) ? '0' : num.toString();
-      }
-      
-      case 'b': {
-        const num = Number(arg);
-        return Number.isNaN(num) ? '0' : Math.trunc(num).toString(2);
-      }
-      
-      case 'o': {
-        const num = Number(arg);
-        return Number.isNaN(num) ? '0' : Math.trunc(num).toString(8);
-      }
-      
-      case 'x': {
-        const num = Number(arg);
-        return Number.isNaN(num) ? '0' : Math.trunc(num).toString(16);
-      }
-      
-      case 'X': {
-        const num = Number(arg);
-        return Number.isNaN(num) ? '0' : Math.trunc(num).toString(16).toUpperCase();
-      }
-      
-      case 'v': {
-        if (arg === null) return 'null';
-        if (arg === undefined) return 'undefined';
-        if (typeof arg === 'object') {
-          try {
-            return JSON.stringify(arg);
-          } catch (e) {
-            return '[Circular]';
-          }
-        }
-        return String(arg);
-      }
-      
-      default: 
-        return match;
+    switch (match) {
+      case '%s': return String(arg);
+      case '%d': case '%i': return parseInt(arg) || 0;
+      case '%f': return parseFloat(arg) || 0;
+      case '%b': return parseInt(arg).toString(2);
+      case '%o': return parseInt(arg).toString(8);
+      case '%x': return parseInt(arg).toString(16);
+      case '%X': return parseInt(arg).toString(16).toUpperCase();
+      case '%v': 
+        return (typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : String(arg);
+      default: return match;
     }
   });
   
@@ -87,40 +35,163 @@ function printf(format, ...args) {
   return result;
 }
 
-// Add input validation helpers
-function validateArgs(fn, args) {
-  if (args.length === 0) {
-    throw new Error(`${fn.name} requires at least one argument`);
+async function input(prompt = '') {
+  process.stdout.write(prompt);
+  process.stdin.setEncoding('utf8');
+  await new Promise(resolve => process.stdin.once('readable', resolve));
+  const data = process.stdin.read();
+  process.stdin.pause(); 
+  return data.trim();
+}
+
+function isString(v) {
+  if (!v) return false;
+  return typeof v === 'string';
+}
+
+function isNumber(v) {
+  if (!v) return false;
+  return typeof v === 'number';
+}
+
+function isArray(v) {
+  if (!v) return false;
+  return Array.isArray(v);
+}
+
+function isObject(v) {
+  if (!v) return false;
+  return typeof v === 'object' && !Array.isArray(v);
+}
+
+function isFunction(v) {
+  if (!v) return false;
+  return typeof v === 'function';
+}
+
+function isBoolean(v) {
+  if (!v) return false;
+  return typeof v === 'boolean';
+}
+
+function isNull(v) {
+  return v === null;
+}
+
+function isUndefined(v) {
+  return v === undefined;
+}
+
+function isEmpty(v) {
+  if (isNull(v) || isUndefined(v)) return true;
+  if (isString(v) || isArray(v)) return v.length === 0;
+  if (isObject(v)) return Object.keys(v).length === 0;
+  return false;
+}
+
+function basename(p) {
+  return path.basename(p);
+}
+
+function dirname(p) {
+  return path.dirname(p);
+}
+
+function extname(p) {
+  return path.extname(p);
+}
+
+function hostname() {
+  return os.hostname();
+}
+
+function homedir() {
+  return os.homedir();
+}
+
+function platform() {
+  return process.platform;
+}
+
+function beep() {
+    process.stdout.write('\u0007');
+}
+
+function die(message) {
+  process.stderr.write(message + "\n");
+  process.exit(1);
+}
+
+function exit(code = 0) {
+  process.exit(code);
+}
+
+function exec(command) {
+  try {
+    return child_process.execSync(command, { encoding: 'utf8' }).trim();
+  } catch (e) {
+    return null;
   }
 }
 
-// Enhanced versions with validation
-function safePrintln(x, ...args) {
-  if (arguments.length === 0) {
-    process.stdout.write('\n');
-    return undefined;
-  }
-  return println(x, ...args);
+function args() {
+  return process.argv.slice(2);
 }
 
-function safePrintf(format, ...args) {
-  if (arguments.length === 0) {
-    return '';
-  }
-  return printf(format, ...args);
+function env(key, defaultValue = null) {
+    return process.env[key] || defaultValue;
 }
 
-// Export both safe and original versions
-global.println = safePrintln;
-global.printf = safePrintf;
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-// Also export unsafe versions for performance-critical code
-global.unsafePrintln = println;
-global.unsafePrintf = printf;
+function timestamp() {
+  return Math.floor(Date.now() / 1000);
+}
 
-module.exports = {
-  println: safePrintln,
-  printf: safePrintf,
-  unsafePrintln: println,
-  unsafePrintf: printf
+function timerStart() {
+  return process.hrtime.bigint();
+}
+
+function timerEnd(start) {
+  const end = process.hrtime.bigint();
+  return Number(end - start) / 1_000_000;
+}
+
+global.ns = {
+    println,
+    printf,
+    input,
+    isString,
+    isNumber,
+    isArray,
+    isObject,
+    isFunction,
+    isBoolean,
+    isNull,
+    isUndefined,
+    isEmpty,
+    basename,
+    dirname,
+    extname,
+    hostname,
+    homedir,
+    platform,
+    beep,
+    die,
+    exit,
+    exec,
+    args,
+    env,
+    sleep,
+    timestamp,
+    timerStart,
+    timerEnd,
 };
+global.ns = Object.freeze(global.ns);
+global.println = global.ns.println;
+global.printf = global.ns.printf;
+
+
+module.exports = {};
