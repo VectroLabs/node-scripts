@@ -1,0 +1,10 @@
+
+.replit
+*.md
+.gitignore
+.git/
+node_modules/
+.env
+.env.*
+*.log
+.DS_Store

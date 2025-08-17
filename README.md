@@ -47,21 +47,21 @@
 ## 📦 Installation
 
 ```bash
-# Clone this repository
-git clone https://github.com/VectroLabs/node-scripts.git
+# Install from npm
+npm install node-scripts
 
-# Navigate to project directory
-cd node-scripts
+# Or using yarn
+yarn add node-scripts
 
-# Install dependencies
-npm install
+# Or using pnpm
+pnpm add node-scripts
 ```
 
 ## 🚀 Quick Start
 
 ```javascript
 // Import the library
-require('./src/index.js');
+require('node-scripts');
 
 // Now you have access to global utilities
 println("Hello, World!");
