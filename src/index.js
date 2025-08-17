@@ -8,7 +8,7 @@ function printf(format, ...args) {
   let argIndex = 0;
   
   // Replace format specifiers with arguments
-  result = result.replace(/%[sdifboxX%]/g, (match) => {
+  result = result.replace(/%[sdifboxXv%]/g, (match) => {
     if (match === '%%') return '%';
     if (argIndex >= args.length) return match;
     
@@ -23,6 +23,11 @@ function printf(format, ...args) {
       case '%o': return parseInt(arg).toString(8);
       case '%x': return parseInt(arg).toString(16);
       case '%X': return parseInt(arg).toString(16).toUpperCase();
+      case '%v': 
+        if (typeof arg === 'object' && arg !== null) {
+          return JSON.stringify(arg);
+        }
+        return String(arg);
       default: return match;
     }
   });
